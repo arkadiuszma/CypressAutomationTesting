@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
 
-describe ('Pierwszy test', () => {
-    it('Test', () => {
+describe ('List test', () => {
+    it('ForEach', () => {
         cy.visit('/');
         cy.get('[title="T-shirts"]').eq(1).click();
         cy.get('#selectProductSort').then(select => {
