@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import ContactUsPage from "..//PageObjects//ContactUsPage";
+import ContactUsPage from "..//PageObjects//ContactUsPage.js";
 
 describe ('Check all possibilities with sending form to system administration', () => {
     beforeEach(() => {

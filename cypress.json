@@ -2,5 +2,8 @@
     "baseUrl": "http://automationpractice.com",
     "viewportHeight":1080,
     "viewportWidth":1920,
-    "theme": "dark"
+    "theme": "dark",
+    "defaultCommandTimeout": 10000
+
+
 }

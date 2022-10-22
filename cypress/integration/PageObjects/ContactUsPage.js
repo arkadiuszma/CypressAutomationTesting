@@ -23,7 +23,7 @@ class ContactUsPage{
         return this;
     }
     chooseSubject(subject){
-        this.elements.SubjectList().select(subject).should('contain',subject);
+        this.elements.SubjectList().select(subject)
         return this;
     }
     inputEmail(email){
