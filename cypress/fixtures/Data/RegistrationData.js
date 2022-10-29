@@ -32,7 +32,7 @@ class RegistrationData{
         return gender;
     }
     userAgreements(){
-        const agreements = ['yes', 'no'];
+        let agreements = ['yes', 'no'];
         let agreement = agreements[Math.floor(Math.random()*agreements.length)];
         return agreement;
     }
