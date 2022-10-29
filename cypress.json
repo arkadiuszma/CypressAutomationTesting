@@ -3,7 +3,6 @@
     "viewportHeight":1080,
     "viewportWidth":1920,
     "theme": "dark",
-    "defaultCommandTimeout": 10000
-
-
+    "defaultCommandTimeout": 10000,
+    "failOnStatusCode": false
 }

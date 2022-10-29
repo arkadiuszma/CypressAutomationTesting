@@ -134,7 +134,7 @@ class RegisterPage{
         this.elements.AssertRegistration().should('contain', title);
         return this;
     }
-    Logout(title){
+    Logout(){
         this.elements.LogoutBtn().click();
         this.elements.SignUpBtn().should('be.visible');
         return this;

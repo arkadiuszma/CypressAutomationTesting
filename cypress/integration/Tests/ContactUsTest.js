@@ -1,56 +1,68 @@
 /// <reference types="cypress" />
 
-import ContactUsPage from "..//PageObjects//ContactUsPage.js";
+import ContactUsPage from "../../fixtures/PageObjects/ContactUsPage.js";
 
 describe ('Check all possibilities with sending form to system administration', () => {
     beforeEach(() => {
         cy.visit('/');
     })
-    it('CorrectForm', () => {
+    const assertTitle = 'Contact us';
+    const headingTitle = 'Customer service - Contact us';
+    const subject = 'Customer service';
+    let email = 'example@email.com';
+    let orderNo = Math.floor(Math.random()*100);
+    const filePath = '..//fixtures//ImageTest.png';
+    let message = 'Something You want to tell';
+    const validAlert = 'Your message has been successfully sent to our team.';
+    const invalidAlertMessage = 'The message cannot be blank';
+    const invalidEmailAlert = 'Invalid email address.';
+    const invalidSubjectAlert = 'Please select a subject from the list provided.';
+
+    it('Correct form', () => {
         const page = new ContactUsPage();
-        page.getContactUsFormPage('Contact us')
-            .checkHeadingTitle('Customer service - Contact us')
-            .chooseSubject('Customer service')
-            .inputEmail('example@email.com')
-            .inputOrderNumber('no_123')
-            .fileUpload('..//fixtures//ImageTest.png')
-            .inputMessage('Something You want to tell')
+        page.getContactUsFormPage(assertTitle)
+            .checkHeadingTitle(headingTitle)
+            .chooseSubject(subject)
+            .inputEmail(email)
+            .inputOrderNumber(orderNo)
+            .fileUpload(filePath)
+            .inputMessage(message)
             .sendForm()
-            .getValidAlert('Your message has been successfully sent to our team.');
+            .getValidAlert(validAlert);
     })
-    it('FormWithoutMessage', () => {
+    it('Form without message', () => {
         const page = new ContactUsPage();
-        page.getContactUsFormPage('Contact us')
-            .checkHeadingTitle('Customer service - Contact us')
-            .chooseSubject('Customer service')
-            .inputEmail('example@email.com')
-            .inputOrderNumber('no_123')
-            .fileUpload('..//fixtures//ImageTest.png')
+        page.getContactUsFormPage(assertTitle)
+            .checkHeadingTitle(headingTitle)
+            .chooseSubject(subject)
+            .inputEmail(email)
+            .inputOrderNumber(orderNo)
+            .fileUpload(filePath)
             .sendForm()
-            .getInvalidAlert('The message cannot be blank');
+            .getInvalidAlert(invalidAlertMessage);
     })
 
-    it('FormWithoutEmail', () => {
+    it('Form without email', () => {
         const page = new ContactUsPage();
-        page.getContactUsFormPage('Contact us')
-            .checkHeadingTitle('Customer service - Contact us')
-            .chooseSubject('Customer service')
-            .inputOrderNumber('no_123')
-            .fileUpload('..//fixtures//ImageTest.png')
-            .inputMessage('Something You want to tell')
+        page.getContactUsFormPage(assertTitle)
+            .checkHeadingTitle(headingTitle)
+            .chooseSubject(subject)
+            .inputOrderNumber(orderNo)
+            .fileUpload(filePath)
+            .inputMessage(message)
             .sendForm()
-            .getInvalidAlert('Invalid email address')
+            .getInvalidAlert(invalidEmailAlert);
     })
 
-    it('FormWithoutChoosingSubject', () => {
+    it('Form without choosing subject', () => {
         const page = new ContactUsPage();
-        page.getContactUsFormPage('Contact us')
-            .checkHeadingTitle('Customer service - Contact us')
-            .inputEmail('example@email.com')
-            .inputOrderNumber('no_123')
-            .fileUpload('..//fixtures//ImageTest.png')
-            .inputMessage('Something You want to tell')
+        page.getContactUsFormPage(assertTitle)
+            .checkHeadingTitle(headingTitle)
+            .inputEmail(email)
+            .inputOrderNumber(orderNo)
+            .fileUpload(filePath)
+            .inputMessage(message)
             .sendForm()
-            .getInvalidAlert('Please select a subject from the list provided.')
+            .getInvalidAlert(invalidSubjectAlert);
     })
 })

@@ -1,77 +1,77 @@
 /// <reference types="cypress" />
 
-import RegisterPage from "..//PageObjects//RegisterPage.js";
+import RegisterPage from "../../fixtures/PageObjects/RegisterPage.js";
+import RegisterData from "../../fixtures/Data/RegistrationData.js";
 
 describe ('Register new user and checking communicates with wrong data', () => {
     beforeEach(() => {
         cy.visit('/');
     })
+
+    const page = new RegisterPage();
+    const user = new RegisterData();
+    const registerAssertion = 'Create an account';
+    const headingTitle = 'Your personal information';
+    const firstNameTitle = 'First name';
+    const lastNameTitle = 'Last name';
+    const passwordTitle = 'Password';
+    const dateOfBirthTitle = 'Date of Birth';
+    const addressTitle = 'Address';
+    const cityTitle = 'City';
+    const stateTitle = 'State';
+    const zipTitle = 'Zip/Postal Code';
+    const phoneTitle = 'Mobile phone';
+    const logInTitle = 'Welcome to your account.';
+    const invalidEmailAssert = 'Invalid email address.';
+    const invalidAllInputs = 'There are 8 errors';
+
     it('Valid registration test', () => {
-        const page = new RegisterPage();
-        let number = Math.round(Math.random() * 10000);
-        let month = Math.round(Math.random() * 12).toString();
-        if (month === '0'){
-            month = '1';
-        }
-        let day;
-        if (month === '1' || '3' || '5' || '7' || '8' || '10' || '12'){
-            day = Math.round(Math.random() * 31).toString();
-        } 
-        else if (month === '4' || '6' || '9' || '11'){
-            day = Math.round(Math.random() * 30).toString();
-        } 
-        else {
-            day = Math.round(Math.random() * 29).toString();
-        }
-        if (day === '0'){
-            day = '1';
-        }
-        let year = Math.round(Math.random() * (2022 - 1900 +1) + 1900).toString();
-        page.GoToRegisterPage('Create an account')
-            .InputEmail('user' + number + '@example.com', 'Your personal information')
-            .ChooseSex('male')
-            .InputCustomerName('First name', 'John')
-            .InputLastName('Last name', 'Blue')
-            .InputPassword('Password', 'Tester123')
-            .SelectDayOfBirth('Date of Birth', day, month, year)
-            .CheckAgreement('yes','no')
-            .InputAddress('Address', 'Long Street 32')
-            .InputCity('City', 'New York')
-            .SelectState('State', 'New York')
-            .InputPostcode('Zip/Postal Code', '12432')
-            .InputPhoneNumber('Mobile phone','432754213')
+        page.GoToRegisterPage(registerAssertion)
+            .InputEmail(user.userEmail(), headingTitle)
+            .ChooseSex(user.userGender())
+            .InputCustomerName(firstNameTitle, user.userName())
+            .InputLastName(lastNameTitle, user.userLastName())
+            .InputPassword(passwordTitle, user.userPassword())
+            .SelectDayOfBirth(dateOfBirthTitle, user.setDay(), user.setMonth(), user.setYear())
+            .CheckAgreement(user.userAgreements(), user.userAgreements())
+            .InputAddress(addressTitle, user.userStreet())
+            .InputCity(cityTitle, user.userCity())
+            .SelectState(stateTitle, user.userState())
+            .InputPostcode(zipTitle, user.userPostCode())
+            .InputPhoneNumber(phoneTitle, user.userPhone())
             .SubmitRegistration()
-            .LogInPageAssertion('Welcome to your account.');
+            .LogInPageAssertion(logInTitle);
 
     })
-    it('Logout user test', () => {
-        const page = new RegisterPage();
-        let number = Math.round(Math.random() * 10000);
-        page.GoToRegisterPage('Create an account')
-        .InputEmail('user' + number + '@example.com', 'Your personal information')
-        .InputCustomerName('First name', 'John')
-        .InputLastName('Last name', 'Blue')
-        .InputPassword('Password', 'Tester123')
-        .InputAddress('Address', 'Yelowside 542')
-        .InputCity('City', 'New York')
-        .SelectState('State', 'New York')
-        .InputPostcode('Zip/Postal Code', '12432')
-        .InputPhoneNumber('Mobile phone','432754213')
-        .SubmitRegistration()
-        .LogInPageAssertion('Welcome to your account.')
-        .Logout();
+    it('Logout user test', () => { 
+        page.GoToRegisterPage(registerAssertion)
+            .InputEmail(user.userEmail(), headingTitle)
+            .ChooseSex(user.userGender())
+            .InputCustomerName(firstNameTitle, user.userName())
+            .InputLastName(lastNameTitle, user.userLastName())
+            .InputPassword(passwordTitle, user.userPassword())
+            .SelectDayOfBirth(dateOfBirthTitle, user.setDay(), user.setMonth(), user.setYear())
+            .CheckAgreement(user.userAgreements(), user.userAgreements())
+            .InputAddress(addressTitle, user.userStreet())
+            .InputCity(cityTitle, user.userCity())
+            .SelectState(stateTitle, user.userState())
+            .InputPostcode(zipTitle, user.userPostCode())
+            .InputPhoneNumber(phoneTitle, user.userPhone())
+            .SubmitRegistration()
+            .LogInPageAssertion(logInTitle)
+            .Logout();
     })
     it('Invalid e-mail test', () => {
-        const page = new RegisterPage();
-        page.GoToRegisterPage('Create an account')
-            .InvalidInputWrongEmailFormat('wrong', 'Invalid email address.');
+        page.GoToRegisterPage(registerAssertion)
+            .InvalidInputWrongEmailFormat(user.invalidData(), invalidEmailAssert);
     })
     it('Submit without write form attributes', () => {
-        const page = new RegisterPage();
-        let number = Math.round(Math.random() * 10000);
-        page.GoToRegisterPage('Create an account')
-            .InputEmail('user' + number + '@example.com', 'Your personal information')
+        page.GoToRegisterPage(registerAssertion)
+            .InputEmail(user.userEmail(), headingTitle)
             .SubmitRegistration()
-            .LogWithIncorectDataAlertAssertion('There are 8 errors');
+            .LogWithIncorectDataAlertAssertion(invalidAllInputs);
     })
+    // it('Submit without write last name', () => {
+    //    
+    // })
 })
