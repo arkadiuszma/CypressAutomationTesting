@@ -54,7 +54,7 @@ class RegistrationData{
         return street;
     }
     invalidData(){
-        let invalidData = ['123456', '@', 'abcd', '#$%'];
+        let invalidData = ['1234', '@', 'abcd', '#$%'];
         let invalidInput = invalidData[Math.floor(Math.random()*invalidData.length)];
         return invalidInput;
     }
