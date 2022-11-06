@@ -6,6 +6,7 @@ describe ('Check all possibilities with sending form to system administration', 
     beforeEach(() => {
         cy.visit('/');
     })
+    const page = new ContactUsPage();
     const assertTitle = 'Contact us';
     const headingTitle = 'Customer service - Contact us';
     const subject = 'Customer service';
@@ -18,8 +19,7 @@ describe ('Check all possibilities with sending form to system administration', 
     const invalidEmailAlert = 'Invalid email address.';
     const invalidSubjectAlert = 'Please select a subject from the list provided.';
 
-    it('Correct form', () => {
-        const page = new ContactUsPage();
+    it('Correct form', () => { 
         page.getContactUsFormPage(assertTitle)
             .checkHeadingTitle(headingTitle)
             .chooseSubject(subject)
@@ -31,7 +31,6 @@ describe ('Check all possibilities with sending form to system administration', 
             .getValidAlert(validAlert);
     })
     it('Form without message', () => {
-        const page = new ContactUsPage();
         page.getContactUsFormPage(assertTitle)
             .checkHeadingTitle(headingTitle)
             .chooseSubject(subject)
@@ -43,7 +42,6 @@ describe ('Check all possibilities with sending form to system administration', 
     })
 
     it('Form without email', () => {
-        const page = new ContactUsPage();
         page.getContactUsFormPage(assertTitle)
             .checkHeadingTitle(headingTitle)
             .chooseSubject(subject)
@@ -53,9 +51,7 @@ describe ('Check all possibilities with sending form to system administration', 
             .sendForm()
             .getInvalidAlert(invalidEmailAlert);
     })
-
     it('Form without choosing subject', () => {
-        const page = new ContactUsPage();
         page.getContactUsFormPage(assertTitle)
             .checkHeadingTitle(headingTitle)
             .inputEmail(email)
