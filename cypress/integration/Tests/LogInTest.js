@@ -2,7 +2,7 @@
 
 import LoginPage from "../../fixtures/PageObjects/LoginPage.js";
 
-describe ('Login user which have permission and checking validation communicates for trying to log in with wrong data', () => {
+describe ('Login user with valid and invalid data, recover user password', () => {
     beforeEach(() => {
         cy.visit('/');
     })
@@ -16,6 +16,8 @@ describe ('Login user which have permission and checking validation communicates
     const submitBtnTitle = 'Sign in';
     const helloTitle = 'Welcome to your account';
     const invalidAuthorization = 'Authentication failed';
+    const recoverTitle = 'Forgot your password?';
+    const messageSendAlert = 'A confirmation email has been sent to your address';
 
     it('Valid registration test', () => {
         page.GoToLoginPage(headingTitle)
@@ -28,10 +30,11 @@ describe ('Login user which have permission and checking validation communicates
         page.GoToLoginPage(headingTitle)
             .LogIn(email + '1234', password, emailTitle, passwordTitle)
             .SubmitLogIn(submitBtnTitle)
-            .CheckError(invalidAuthorization) ;
+            .CheckError(invalidAuthorization);
     })
-    // it ('Recover password', ()=> {
-    //     page.GoToLoginPage(headingTitle)
-    //         .
-    // })
+    it('Recover password', ()=> {
+        page.GoToLoginPage(headingTitle)
+            .RecoverPassword(recoverTitle, recoverTitle, emailTitle, email)
+            .CheckSendMessageAlert(messageSendAlert);
+    })
 })
